@@ -1904,7 +1904,7 @@ try {
             }
         }
 
-        $downResults       = Invoke-PowerOperation -VMList $resolvedVMs.ToArray() -Operation 'PowerDown'
+        $downResults       = @(Invoke-PowerOperation -VMList $resolvedVMs.ToArray() -Operation 'PowerDown')
         $phaseCompleteTime = Get-Date   # Capture the moment the phase finished
         $allPhaseResults.AddRange($downResults)
 
@@ -1975,7 +1975,7 @@ try {
     if ($Script:Operation -in @('PowerOn', 'PowerCycle')) {
         Write-LogInfo "Starting power-on phase — $($resolvedVMs.Count) VM(s)." -nc
 
-        $onResults = Invoke-PowerOperation -VMList $resolvedVMs.ToArray() -Operation 'PowerOn'
+        $onResults = @(Invoke-PowerOperation -VMList $resolvedVMs.ToArray() -Operation 'PowerOn')
         $allPhaseResults.AddRange($onResults)
 
         $onFailed = @($onResults | Where-Object { $_.Result -eq $RES_ERROR })
